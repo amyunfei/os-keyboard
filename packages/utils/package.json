@@ -1,0 +1,6 @@
+{
+  "name": "@os-keyboard/utils",
+  "private": true,
+  "main": "index.ts",
+  "license": "ISC"
+}

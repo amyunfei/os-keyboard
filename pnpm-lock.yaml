@@ -28,6 +28,14 @@ importers:
       vite: 4.1.4_@types+node@18.14.6
       vite-plugin-dts: 2.0.2_pakyy5w5azqvyjtjjomilajlpy
 
+  packages/os-keyboard:
+    specifiers:
+      '@os-keyboard/constants': workspace:*
+      '@os-keyboard/utils': workspace:*
+    dependencies:
+      '@os-keyboard/constants': link:../constants
+      '@os-keyboard/utils': link:../utils
+
 packages:
 
   /@babel/code-frame/7.18.6:

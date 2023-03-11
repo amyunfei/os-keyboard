@@ -1,0 +1,5 @@
+{
+  "name": "@os-keyboard/constants",
+  "main": "index.ts",
+  "license": "ISC"
+}

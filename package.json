@@ -1,17 +1,14 @@
 {
-  "name": "os-keyboard",
   "private": true,
-  "version": "1.0.0",
-  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev:example": "npm -C example run dev",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",

@@ -1,0 +1,16 @@
+{
+  "name": "os-keyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@os-keyboard/constants": "workspace:*",
+    "@os-keyboard/utils": "workspace:*"
+  }
+}
