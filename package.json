@@ -1,4 +1,5 @@
 {
+  "name": "os-keyboard",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -15,6 +16,8 @@
     "@types/node": "^18.14.6",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
+    "@vanilla-extract/css": "^1.10.0",
+    "@vanilla-extract/vite-plugin": "^3.8.0",
     "eslint": "^8.35.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
@@ -24,5 +27,10 @@
   },
   "lint-staged": {
     "*.{vue,js,ts,jsx,tsx,md}": "eslint --fix"
+  },
+  "dependencies": {
+    "@os-keyboard/constants": "workspace:*",
+    "@os-keyboard/layouts": "workspace:*",
+    "@os-keyboard/utils": "workspace:*"
   }
 }

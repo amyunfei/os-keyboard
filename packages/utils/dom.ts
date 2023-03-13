@@ -30,6 +30,29 @@ export function inputAppend(input: HTMLInputElement | HTMLTextAreaElement, value
   return input.value
 }
 
+export function inputBackspace(input: HTMLInputElement | HTMLTextAreaElement): string {
+  const selectionStart = input.selectionStart || 0
+  const selectionEnd = input.selectionEnd || 0
+  const selectLength = selectionEnd - selectionStart
+  const oldValue = input.value
+  const partOneEnd = selectLength ? selectionStart : selectionStart - 1
+  const newValue = oldValue.slice(0, partOneEnd < 0 ? 0 : partOneEnd) + oldValue.slice(selectionEnd)
+  dispatchInput(input, newValue)
+  input.selectionStart = input.selectionEnd = partOneEnd
+  return input.value
+}
+
+export function inputDelete(input: HTMLInputElement | HTMLTextAreaElement): string {
+  const selectionStart = input.selectionStart || 0
+  const selectionEnd = input.selectionEnd || 0
+  const partOneEnd = selectionStart
+  const oldValue = input.value
+  const newValue = oldValue.slice(0, partOneEnd < 0 ? 0 : partOneEnd) + oldValue.slice(selectionEnd + 1)
+  dispatchInput(input, newValue)
+  input.selectionStart = input.selectionEnd = partOneEnd
+  return input.value
+}
+
 export function dispatchInput(input: HTMLInputElement | HTMLTextAreaElement, value: string) {
   const inputEvent = new Event('input', { bubbles: true })
   input.value = value
