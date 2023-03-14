@@ -23,9 +23,13 @@ globalStyle(toClassSelector(ClassName.KEYBOARD_CONTAINER), {
               inset -10px -10px 30px transparent`
 })
 
-globalStyle(toClassSelector(ClassName.HIDE), {
-  transform: 'translateX(-50%) translateY(100%)'
-})
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) +
+  toClassSelector(ClassName.HIDE),
+  {
+    transform: 'translateX(-50%) translateY(100%)'
+  }
+)
 
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
@@ -85,5 +89,132 @@ globalStyle(
   toClassSelector(ClassName.KEYBOARD_KEY) + ':active',
   {
     boxShadow: 'none'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION),
+  {
+    height: '2.5em',
+    background: '#000000',
+    borderRadius: '0.3em',
+    marginBottom: '0.375em',
+    padding: '0 3.75em',
+    transition: 'all 0.25s',
+    textAlign: 'left',
+    overflow: 'hidden'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) +
+  toClassSelector(ClassName.HIDE),
+  {
+    height: 0,
+    marginBottom: 0
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + '> *',
+  {
+    height: '1.5em',
+    marginTop: '0.5em',
+    marginBottom: '0.5em',
+    verticalAlign: 'top',
+    display: 'inline-block'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CLOSE),
+  {
+    width: '1.5em',
+    borderRadius: '1.5em',
+    background: '#FFFFFF',
+    textAlign: 'center',
+    lineHeight: '1.5em',
+    marginRight: '4em',
+    cursor: 'pointer'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CLOSE) + '::after',
+  {
+    content: '✖️'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_INPUT),
+  {
+    border: 'none',
+    outline: 'none',
+    color: '#FFFFFF',
+    padding: '0 1em',
+    cursor: 'pointer',
+    lineHeight: '1.5em',
+    fontSize: 'inherit',
+    borderRadius: '0.5em',
+    letterSpacing: '0.1em',
+    background: 'rgba(255, 255, 255, 0.2)',
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST),
+  {
+    width: '35em',
+    float: 'right',
+    textAlign: 'right'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION),
+  {
+    color: '#FFFFFF',
+    padding: '0.25em 0.5em',
+    margin: '0 0.25em',
+    borderRadius: '0.5em',
+    cursor: 'pointer'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) + ':hover',
+  {
+    background: '#555555'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) +
+  toClassSelector(ClassName.DISABLED),
+  {
+    opacity: 0.5,
+    background: 'transparent !important',
+    cursor: 'not-allowed'
   }
 )
