@@ -113,7 +113,7 @@ export enum KeyCode {
   RIGHT_BRACKET = 221,
   QUOTES = 222,
   // custom key code
-  LANGUAGE = 600,
+  MODE = 600,
   CLOSE = 601,
   ASSOCIATION = 700,
   ASSOCIATION_CLOSE = 701,

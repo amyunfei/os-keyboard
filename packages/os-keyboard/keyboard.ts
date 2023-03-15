@@ -1,4 +1,4 @@
-import type { Key } from '@os-keyboard/layouts'
+import type { Layout } from '@os-keyboard/layouts'
 import { ClassName, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
 
 export class Keyboard {
@@ -12,12 +12,12 @@ export class Keyboard {
     return this.el
   }
 
-  generateKeys(keys: Key[][]) {
+  generateKeys(layout: Layout) {
     // computed rows max-width (keySize * baseWidth) + ((keyNum + 1) * keySpace)
     const rows: string[] = []
     const rowsWidth: number[] = []
-    for (let i = 0; i < keys.length; i++) {
-      const current = keys[i]
+    for (let i = 0; i < layout.length; i++) {
+      const current = layout[i]
       const row: string[] = []
       let sizes = 0
       for (let j = 0; j < current.length; j++) {

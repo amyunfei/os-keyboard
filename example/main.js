@@ -1,3 +1,9 @@
-import Keyboard from '../dist/bundle'
+import { OSKeyboard, qwertyLayout } from '../dist/bundle'
 import '../dist/style.css'
-new Keyboard({ size: 'mini' })
+new OSKeyboard({
+  size: 'mini',
+  zIndex: 2000,
+  modes: [
+    { name: 'en', layout: qwertyLayout }
+  ]
+})

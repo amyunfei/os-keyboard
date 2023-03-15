@@ -7,6 +7,7 @@ importers:
       '@commitlint/cli': ^17.4.4
       '@commitlint/config-conventional': ^17.4.4
       '@os-keyboard/constants': workspace:*
+      '@os-keyboard/dictionaries': workspace:*
       '@os-keyboard/layouts': workspace:*
       '@os-keyboard/utils': workspace:*
       '@types/node': ^18.14.6
@@ -22,6 +23,7 @@ importers:
       vite-plugin-dts: ^2.0.2
     dependencies:
       '@os-keyboard/constants': link:packages/constants
+      '@os-keyboard/dictionaries': link:packages/dictionaries
       '@os-keyboard/layouts': link:packages/layouts
       '@os-keyboard/utils': link:packages/utils
     devDependencies:

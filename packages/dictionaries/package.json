@@ -1,0 +1,5 @@
+{
+  "name": "@os-keyboard/dictionaries",
+  "main": "index.ts",
+  "license": "ISC"
+}

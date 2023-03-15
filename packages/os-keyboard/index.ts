@@ -7,20 +7,29 @@ import {
 } from '@os-keyboard/utils'
 import { Keyboard } from './keyboard'
 import { Association } from './association'
-import { qwertyLayout } from '@os-keyboard/layouts'
+import type { Layout } from '@os-keyboard/layouts'
+import { Dictionary } from '@os-keyboard/dictionaries'
 
 type FnKeyHandler = (instance: OSKeyboard, currentInput: Input) => void
+interface KeyboardMode {
+  name: string,
+  layout: Layout,
+  associate?: (keywords: string) => string | Dictionary
+}
 interface OSKeyboardOption {
   size: KeyboardSize,
-  zIndex: number
+  zIndex: number,
+  modes: KeyboardMode[]
 }
-class OSKeyboard {
+export class OSKeyboard {
   private focusTrigger: FocusTrigger = MouseTrigger.FOCUS
   private inputTrigger: InputTrigger = MouseTrigger.INPUT
   private container: HTMLElement
   private sourceInput: Input | null = null
   private currentInput: Input | null = null
   private fnMap: Map<KeyCode, FnKeyHandler> = new Map()
+  private modeMap: Map<string, KeyboardMode> = new Map()
+  private currentMode = ''
   private keyboard: Keyboard
   private association: Association
   constructor (option: OSKeyboardOption) {
@@ -30,8 +39,6 @@ class OSKeyboard {
     }
 
     this.keyboard = new Keyboard()
-    this.keyboard.generateKeys(qwertyLayout.keys)
-
     this.association = new Association()
     this.container = document.createElement('div')
     this.container.className = `${ClassName.KEYBOARD_CONTAINER} ${ClassName.HIDE} ${option.size}`
@@ -44,11 +51,17 @@ class OSKeyboard {
     // add keyboard click event listener
     this.container.addEventListener<InputTrigger>(this.inputTrigger, this.keyboardClickHandler)
 
+    // set fn keys handler
     this.setFnKey(KeyCode.BACKSPACE, (_, currentInput) => { inputBackspace(currentInput) })
     this.setFnKey(KeyCode.DELETE, (_, currentInput) => { inputDelete(currentInput) })
     this.setFnKey(KeyCode.CLOSE, (instance) => { instance.setVisible(false) })
     this.setFnKey(KeyCode.TAB, (_, currentInput) => { inputAppend(currentInput, '\t') })
 
+    option.modes.forEach(mode => {
+      this.modeMap.set(mode.name, mode)
+    })
+    this.currentMode = option.modes[0].name
+    this.render()
   }
 
   public setVisible(visible?: boolean) {
@@ -62,11 +75,18 @@ class OSKeyboard {
     this.fnMap.set(keyCode, fn)
   }
 
+  private render() {
+    // generate keys by current mode layout
+    const currentMode = this.modeMap.get(this.currentMode)
+    if (currentMode !== undefined) {
+      this.keyboard.generateKeys(currentMode.layout)
+    }
+  }
   private focusHandler = (event: TriggerEvent) => {
     const eventTarget = event.target
     if (isInput(eventTarget)) {
       this.sourceInput = eventTarget
-      this.currentInput = eventTarget
+      this.currentInput = this.association.getInput()
       this.setVisible(true)
       this.sourceInput.addEventListener('blur', this.blurHandler)
     }
@@ -104,4 +124,4 @@ class OSKeyboard {
   }
 }
 
-export default OSKeyboard
+export * from '@os-keyboard/layouts'

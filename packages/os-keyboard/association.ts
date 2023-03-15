@@ -1,5 +1,6 @@
 import { ClassName, KeyCode, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
 import type { Input } from '@os-keyboard/utils'
+import { toggleClassName } from '@os-keyboard/utils'
 
 export class Association {
   private el: HTMLElement
@@ -21,9 +22,21 @@ export class Association {
     this.candidateList = document.createElement('div')
     this.candidateList.className = ClassName.ASSOCIATION_CANDIDATE_LIST
     this.el.append(closeKey, this.input, this.candidateList)
+    this.setVisible(true)
   }
 
-  getElement(): HTMLElement {
+  public getElement(): HTMLElement {
     return this.el
+  }
+
+  public getInput(): Input {
+    return this.input
+  }
+
+  public setVisible(visible?: boolean) {
+    if (visible !== undefined) {
+      visible = !visible
+    }
+    toggleClassName(this.el, ClassName.HIDE, visible)
   }
 }

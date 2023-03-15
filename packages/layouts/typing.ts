@@ -6,7 +6,4 @@ export interface Key {
   size?: number
 }
 
-export interface Layout {
-  name: string,
-  keys: Key[][]
-}
+export type Layout = Key[][]
