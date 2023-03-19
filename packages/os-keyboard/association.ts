@@ -1,4 +1,4 @@
-import { ClassName, KeyCode, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
+import { ClassName, IconClassName, KeyCode, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
 import type { Input } from '@os-keyboard/utils'
 import { toggleClassName } from '@os-keyboard/utils'
 
@@ -13,6 +13,7 @@ export class Association {
     const closeKey = document.createElement('div')
     closeKey.className = ClassName.ASSOCIATION_CLOSE
     closeKey.setAttribute(KEY_CODE_ATTR_NAME, KeyCode.ASSOCIATION_CLOSE.toString())
+    closeKey.innerHTML = `<i class="${IconClassName.CLOSE}"></i>`
 
     this.input = document.createElement('input')
     this.input.type = 'text'

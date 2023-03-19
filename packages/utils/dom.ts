@@ -18,6 +18,10 @@ export function toggleClassName(element: HTMLElement, token: string, force?: boo
   element.className = classList.join(' ')
 }
 
+export function toClassSelector(className: string) {
+  return '.' + className.split(' ').join('.')
+}
+
 export function inputAppend(input: HTMLInputElement | HTMLTextAreaElement, value: string): string {
   const selectionStart = input.selectionStart || 0
   const selectionEnd = input.selectionEnd || 0

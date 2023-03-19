@@ -1,9 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css'
 import { ClassName } from '@os-keyboard/constants'
-
-function toClassSelector(className: string): string {
-  return `.${className}`
-}
+import { toClassSelector } from '@os-keyboard/utils'
 
 globalStyle(toClassSelector(ClassName.KEYBOARD_CONTAINER), {
   fontSize: 16,
@@ -140,16 +137,20 @@ globalStyle(
     textAlign: 'center',
     lineHeight: '1.5em',
     marginRight: '4em',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    position: 'relative'
   }
 )
 
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
-  toClassSelector(ClassName.ASSOCIATION_CLOSE) + '::after',
+  toClassSelector(ClassName.ASSOCIATION_CLOSE) + '> *',
   {
-    content: '✖️'
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   }
 )
 

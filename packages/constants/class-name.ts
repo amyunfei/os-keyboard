@@ -11,3 +11,9 @@ export enum ClassName {
   ASSOCIATION_CANDIDATE_LIST = 'association-candidate-list',
   ASSOCIATION_CANDIDATE_OPTION = 'association-candidate-option'
 }
+
+export enum IconClassName {
+  CLOSE = 'os-icon-close',
+  PREV = 'os-icon-prev',
+  NEXT = 'os-icon-next'
+}
