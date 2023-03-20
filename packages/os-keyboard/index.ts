@@ -90,6 +90,7 @@ export class OSKeyboard {
       this.setVisible(true)
       this.sourceInput.addEventListener('blur', this.blurHandler)
     }
+    this.association.generateCandidateList(['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'])
   }
   private blurHandler = () => {
     if (this.sourceInput !== null) {

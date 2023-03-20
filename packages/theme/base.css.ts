@@ -186,21 +186,21 @@ globalStyle(
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
-  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION),
   {
     color: '#FFFFFF',
     padding: '0.25em 0.5em',
     margin: '0 0.25em',
     borderRadius: '0.5em',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    position: 'relative',
+    minWidth: '2em'
   }
 )
 
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
-  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) + ':hover',
   {
     background: '#555555'
@@ -210,12 +210,23 @@ globalStyle(
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
-  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST) + ' ' +
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) +
   toClassSelector(ClassName.DISABLED),
   {
     opacity: 0.5,
     background: 'transparent !important',
     cursor: 'not-allowed'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
+  toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) + '> *',
+  {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   }
 )

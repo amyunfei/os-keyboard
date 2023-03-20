@@ -13,6 +13,7 @@ export enum ClassName {
 }
 
 export enum IconClassName {
+  BASE = 'os-icon',
   CLOSE = 'os-icon-close',
   PREV = 'os-icon-prev',
   NEXT = 'os-icon-next'
