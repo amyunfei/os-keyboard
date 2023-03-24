@@ -178,6 +178,10 @@ globalStyle(
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_LIST),
   {
     width: '35em',
+    margin: 0,
+    height: '2em',
+    marginTop: '0.25em',
+    marginBottom: '0.25em',
     float: 'right',
     textAlign: 'right'
   }
@@ -188,13 +192,16 @@ globalStyle(
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION),
   {
+    display: 'inline-block',
+    lineHeight: '2em',
+    verticalAlign: 'top',
+    height: '100%',
     color: '#FFFFFF',
-    padding: '0.25em 0.5em',
+    padding: '0 0.5em',
     margin: '0 0.25em',
     borderRadius: '0.5em',
     cursor: 'pointer',
     position: 'relative',
-    minWidth: '2em'
   }
 )
 
@@ -224,9 +231,6 @@ globalStyle(
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION) + ' ' +
   toClassSelector(ClassName.ASSOCIATION_CANDIDATE_OPTION) + '> *',
   {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
+    marginTop: '0.5em',
   }
 )

@@ -4,6 +4,8 @@ new OSKeyboard({
   size: 'mini',
   zIndex: 2000,
   modes: [
-    { name: 'en', layout: qwertyLayout }
+    { name: 'en', layout: qwertyLayout, associate: (str) => {
+      return str + '+'
+    }}
   ]
 })

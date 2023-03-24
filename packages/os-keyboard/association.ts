@@ -39,7 +39,6 @@ export class Association {
     this.nextKey.innerHTML = `<i class="${IconClassName.BASE} ${IconClassName.NEXT}"></i>`
 
     this.el.append(closeKey, this.input, this.candidateList)
-    this.setVisible(true)
   }
 
   public getElement(): HTMLElement {

@@ -45,5 +45,6 @@ globalStyle(toClassSelector(IconClassName.NEXT) + '::before', {
   width: 0,
   border: '0.5em solid transparent',
   borderRightWidth: '0.25em',
-  borderLeftColor: '#FFFFFF'
+  marginLeft: '0.25em',
+  borderLeftColor: '#FFFFFF',
 })

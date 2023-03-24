@@ -50,6 +50,8 @@ export class OSKeyboard {
     document.addEventListener<FocusTrigger>(this.focusTrigger, this.focusHandler)
     // add keyboard click event listener
     this.container.addEventListener<InputTrigger>(this.inputTrigger, this.keyboardClickHandler)
+    // add association input event listener
+    this.association.getInput().addEventListener('input', this.associationInputHandler)
 
     // set fn keys handler
     this.setFnKey(KeyCode.BACKSPACE, (_, currentInput) => { inputBackspace(currentInput) })
@@ -61,7 +63,6 @@ export class OSKeyboard {
       this.modeMap.set(mode.name, mode)
     })
     this.currentMode = option.modes[0].name
-    this.render()
   }
 
   public setVisible(visible?: boolean) {
@@ -80,17 +81,22 @@ export class OSKeyboard {
     const currentMode = this.modeMap.get(this.currentMode)
     if (currentMode !== undefined) {
       this.keyboard.generateKeys(currentMode.layout)
+      if (currentMode.associate !== undefined) {
+        this.currentInput = this.association.getInput()
+      } else {
+        this.currentInput = this.sourceInput
+      }
     }
   }
   private focusHandler = (event: TriggerEvent) => {
     const eventTarget = event.target
     if (isInput(eventTarget)) {
       this.sourceInput = eventTarget
-      this.currentInput = this.association.getInput()
+      // this.currentInput = eventTarget
+      this.render()
       this.setVisible(true)
       this.sourceInput.addEventListener('blur', this.blurHandler)
     }
-    this.association.generateCandidateList(['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'])
   }
   private blurHandler = () => {
     if (this.sourceInput !== null) {
@@ -113,6 +119,13 @@ export class OSKeyboard {
         return
       }
       inputAppend(this.currentInput, eventTarget.innerText)
+    }
+  }
+  private associationInputHandler = (event: Event) => {
+    const eventTarget = event.target
+    if (isInput(eventTarget)) {
+      const value = eventTarget.value
+      this.association.setVisible(value !== '')
     }
   }
 
