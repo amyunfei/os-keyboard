@@ -1,11 +1,9 @@
-import { OSKeyboard, qwertyLayout } from '../dist/bundle'
+import { OSKeyboard, qwertyLayout, ZH_PINYIN_DICT } from '../dist/index'
 import '../dist/style.css'
 new OSKeyboard({
   size: 'mini',
   zIndex: 2000,
   modes: [
-    { name: 'en', layout: qwertyLayout, associate: (str) => {
-      return str + '+'
-    }}
+    { name: 'en', layout: qwertyLayout, associate: ZH_PINYIN_DICT }
   ]
 })

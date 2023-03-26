@@ -7,11 +7,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: [
-        resolve(__dirname, './packages/os-keyboard/index.ts'),
-        resolve(__dirname, './packages/theme/index.ts')
+        resolve(__dirname, './packages/os-keyboard/index.ts')
       ],
-      name: 'Bundle',
-      fileName: 'bundle'
+      name: 'os-keyboard'
     }
   },
   plugins: [vanillaExtractPlugin(), dts({ include: './packages' })]

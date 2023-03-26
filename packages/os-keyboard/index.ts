@@ -10,11 +10,11 @@ import { Association } from './association'
 import type { Layout } from '@os-keyboard/layouts'
 import { Dictionary } from '@os-keyboard/dictionaries'
 
-type FnKeyHandler = (instance: OSKeyboard, currentInput: Input) => void
+type FnKeyHandler = (value: string, currentInput: Input, instance: OSKeyboard) => void
 interface KeyboardMode {
   name: string,
   layout: Layout,
-  associate?: (keywords: string) => string | Dictionary
+  associate?: Dictionary
 }
 interface OSKeyboardOption {
   size: KeyboardSize,
@@ -50,14 +50,28 @@ export class OSKeyboard {
     document.addEventListener<FocusTrigger>(this.focusTrigger, this.focusHandler)
     // add keyboard click event listener
     this.container.addEventListener<InputTrigger>(this.inputTrigger, this.keyboardClickHandler)
-    // add association input event listener
-    this.association.getInput().addEventListener('input', this.associationInputHandler)
 
     // set fn keys handler
-    this.setFnKey(KeyCode.BACKSPACE, (_, currentInput) => { inputBackspace(currentInput) })
-    this.setFnKey(KeyCode.DELETE, (_, currentInput) => { inputDelete(currentInput) })
-    this.setFnKey(KeyCode.CLOSE, (instance) => { instance.setVisible(false) })
+    this.setFnKey(KeyCode.BACKSPACE, (_, currentInput, instance) => {
+      const input = currentInput.value ? currentInput : instance.sourceInput
+      if (input !== null) {
+        inputBackspace(input)
+      }
+    })
+    this.setFnKey(KeyCode.DELETE, (_, currentInput, instance) => {
+      const input = currentInput.value ? currentInput : instance.sourceInput
+      if (input !== null) {
+        inputDelete(input)
+      }
+    })
+    this.setFnKey(KeyCode.CLOSE, (_, _currentInput, instance) => { instance.setVisible(false) })
     this.setFnKey(KeyCode.TAB, (_, currentInput) => { inputAppend(currentInput, '\t') })
+    // set association panel keys handler
+    this.setFnKey(KeyCode.ASSOCIATION, (value, _currentInput, instance) => {
+      if (instance.sourceInput === null) return
+      inputAppend(instance.sourceInput, value)
+      instance.association.clear()
+    })
 
     option.modes.forEach(mode => {
       this.modeMap.set(mode.name, mode)
@@ -83,6 +97,7 @@ export class OSKeyboard {
       this.keyboard.generateKeys(currentMode.layout)
       if (currentMode.associate !== undefined) {
         this.currentInput = this.association.getInput()
+        this.association.setDictionary(currentMode.associate)
       } else {
         this.currentInput = this.sourceInput
       }
@@ -115,17 +130,10 @@ export class OSKeyboard {
       if (keyCode === -1) return
       const fn = this.fnMap.get(keyCode)
       if (fn !== undefined) {
-        fn(this, this.currentInput)
+        fn(eventTarget.innerText, this.currentInput, this)
         return
       }
       inputAppend(this.currentInput, eventTarget.innerText)
-    }
-  }
-  private associationInputHandler = (event: Event) => {
-    const eventTarget = event.target
-    if (isInput(eventTarget)) {
-      const value = eventTarget.value
-      this.association.setVisible(value !== '')
     }
   }
 
@@ -139,3 +147,5 @@ export class OSKeyboard {
 }
 
 export * from '@os-keyboard/layouts'
+export * from '@os-keyboard/dictionaries'
+export * from '@os-keyboard/theme'

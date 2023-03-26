@@ -1,11 +1,13 @@
 import { ClassName, IconClassName, KeyCode, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
+import { Dictionary } from '@os-keyboard/dictionaries'
 import type { Input } from '@os-keyboard/utils'
-import { toggleClassName } from '@os-keyboard/utils'
+import { toggleClassName, isInput, dispatchInput } from '@os-keyboard/utils'
 
 export class Association {
   private el: HTMLElement
   private input: Input
   private candidateList: HTMLElement
+  private dictionary: Dictionary | undefined
   private prevKey: HTMLElement
   private nextKey: HTMLElement
   private limit = 10
@@ -41,6 +43,38 @@ export class Association {
     this.el.append(closeKey, this.input, this.candidateList)
   }
 
+  public setDictionary(dictionary: Dictionary) {
+    this.dictionary = dictionary
+    this.input.oninput = this.handleInput
+  }
+
+  private handleInput = (event: Event) => {
+    const eventTarget = event.target
+    if (isInput(eventTarget)) {
+      const value = eventTarget.value
+      if (value) {
+        this.setVisible(true)
+        this.current = 1
+        this.associate(value, this.current, this.limit)
+      } else {
+        this.setVisible(false)
+      }
+    }
+  }
+
+  private associate = (keyboard: string, current: number, limit: number) => {
+    if (this.dictionary === undefined) return
+    const words = (this.dictionary[keyboard] || '').split('')
+    const offset = (current - 1) * limit
+    const end = offset + limit
+    const wordsSlice = words.slice(offset, end)
+    this.generateCandidateList(wordsSlice)
+    if (current === 1) {
+      toggleClassName(this.prevKey, ClassName.DISABLED, true)
+    }
+    toggleClassName(this.nextKey, ClassName.DISABLED, words.length <= end)
+  }
+
   public getElement(): HTMLElement {
     return this.el
   }
@@ -56,13 +90,13 @@ export class Association {
     toggleClassName(this.el, ClassName.HIDE, visible)
   }
 
+  public clear() {
+    dispatchInput(this.input, '')
+  }
+
   public generateCandidateList(words: string[]) {
-    // calculate current pagination
-    const offset = (this.current - 1) * this.limit
-    const end = offset + this.limit
     let wordsStr = ''
-    for (let i = offset; i < end; i++) {
-      if (i > words.length - 1) break
+    for (let i = 0; i < words.length; i++) {
       wordsStr += `<span class="${ClassName.ASSOCIATION_CANDIDATE_OPTION}" ${KEY_CODE_ATTR_NAME}="${KeyCode.ASSOCIATION}">${words[i]}</span>`
     }
     this.candidateList.innerHTML = wordsStr

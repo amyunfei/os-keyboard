@@ -32,6 +32,7 @@
     "@os-keyboard/constants": "workspace:*",
     "@os-keyboard/dictionaries": "workspace:*",
     "@os-keyboard/layouts": "workspace:*",
+    "@os-keyboard/theme": "workspace:*",
     "@os-keyboard/utils": "workspace:*"
   }
 }
