@@ -1,3 +1,5 @@
+import { Input } from './types'
+
 export function toggleClassName(element: HTMLElement, token: string, force?: boolean) {
   if (token === '') return
   const classList = element.className.split(' ')
@@ -22,7 +24,7 @@ export function toClassSelector(className: string) {
   return '.' + className.split(' ').join('.')
 }
 
-export function inputAppend(input: HTMLInputElement | HTMLTextAreaElement, value: string): string {
+export function inputAppend(input: Input, value: string): string {
   const selectionStart = input.selectionStart || 0
   const selectionEnd = input.selectionEnd || 0
   const selectLength = selectionEnd - selectionStart
@@ -34,7 +36,7 @@ export function inputAppend(input: HTMLInputElement | HTMLTextAreaElement, value
   return input.value
 }
 
-export function inputBackspace(input: HTMLInputElement | HTMLTextAreaElement): string {
+export function inputBackspace(input: Input): string {
   const selectionStart = input.selectionStart || 0
   const selectionEnd = input.selectionEnd || 0
   const selectLength = selectionEnd - selectionStart
@@ -46,7 +48,7 @@ export function inputBackspace(input: HTMLInputElement | HTMLTextAreaElement): s
   return input.value
 }
 
-export function inputDelete(input: HTMLInputElement | HTMLTextAreaElement): string {
+export function inputDelete(input: Input): string {
   const selectionStart = input.selectionStart || 0
   const selectionEnd = input.selectionEnd || 0
   const partOneEnd = selectionStart
@@ -57,7 +59,15 @@ export function inputDelete(input: HTMLInputElement | HTMLTextAreaElement): stri
   return input.value
 }
 
-export function dispatchInput(input: HTMLInputElement | HTMLTextAreaElement, value: string) {
+export function inputEnter(input: Input) {
+  const keyboardEvent = new KeyboardEvent('keydown', {
+    code: 'KeyEnter', key: 'Enter', keyCode: 13, charCode: 13
+  })
+  console.log(input)
+  document.dispatchEvent(keyboardEvent)
+}
+
+export function dispatchInput(input: Input, value: string) {
   const inputEvent = new Event('input', { bubbles: true })
   input.value = value
   // if (inputEvent.simulated !== undefined) {

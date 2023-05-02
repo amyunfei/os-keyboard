@@ -3,7 +3,7 @@ import type { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize } from '@os
 import { MouseTrigger, TouchTrigger, ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
 import {
   isTouchScreen, isInput, isHTMLElement, toggleClassName, inputAppend, inputBackspace,
-  inputDelete
+  inputDelete, inputEnter
 } from '@os-keyboard/utils'
 import { Keyboard } from './keyboard'
 import { Association } from './association'
@@ -29,6 +29,7 @@ export class OSKeyboard {
   private currentInput: Input | null = null
   private fnMap: Map<KeyCode, FnKeyHandler> = new Map()
   private modeMap: Map<string, KeyboardMode> = new Map()
+  private modeKeys: string[] = []
   private currentMode = ''
   private keyboard: Keyboard
   private association: Association
@@ -66,6 +67,18 @@ export class OSKeyboard {
     })
     this.setFnKey(KeyCode.CLOSE, (_, _currentInput, instance) => { instance.setVisible(false) })
     this.setFnKey(KeyCode.TAB, (_, currentInput) => { inputAppend(currentInput, '\t') })
+    this.setFnKey(KeyCode.ENTER, (_, currentInput) => {
+      inputAppend(currentInput, '\r')
+      inputEnter(currentInput)
+    })
+    this.setFnKey(KeyCode.MODE, (_, _currentInput, instance) => {
+      // switch to next mode
+      const index = instance.modeKeys.indexOf(instance.currentMode)
+      const currentIndex = (index + 1) % instance.modeKeys.length
+      console.log(currentIndex )
+      this.currentMode = instance.modeKeys[currentIndex]
+      this.render()
+    })
     // set association panel keys handler
     this.setFnKey(KeyCode.ASSOCIATION, (value, _currentInput, instance) => {
       if (instance.sourceInput === null) return
@@ -75,6 +88,7 @@ export class OSKeyboard {
 
     option.modes.forEach(mode => {
       this.modeMap.set(mode.name, mode)
+      this.modeKeys.push(mode.name)
     })
     this.currentMode = option.modes[0].name
   }
@@ -94,7 +108,7 @@ export class OSKeyboard {
     // generate keys by current mode layout
     const currentMode = this.modeMap.get(this.currentMode)
     if (currentMode !== undefined) {
-      this.keyboard.generateKeys(currentMode.layout)
+      this.keyboard.generateKeys(currentMode.layout, currentMode.name)
       if (currentMode.associate !== undefined) {
         this.currentInput = this.association.getInput()
         this.association.setDictionary(currentMode.associate)

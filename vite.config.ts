@@ -9,7 +9,8 @@ export default defineConfig({
       entry: [
         resolve(__dirname, './packages/os-keyboard/index.ts')
       ],
-      name: 'os-keyboard'
+      name: 'os-keyboard',
+      fileName: format => `index.${format}.js`
     }
   },
   plugins: [vanillaExtractPlugin(), dts({ include: './packages' })]

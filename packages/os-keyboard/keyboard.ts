@@ -1,5 +1,5 @@
 import type { Layout } from '@os-keyboard/layouts'
-import { ClassName, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
+import { ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
 
 export class Keyboard {
   private el: HTMLElement
@@ -12,7 +12,7 @@ export class Keyboard {
     return this.el
   }
 
-  generateKeys(layout: Layout) {
+  generateKeys(layout: Layout, modeName: string) {
     // computed rows max-width (keySize * baseWidth) + ((keyNum + 1) * keySpace)
     const rows: string[] = []
     const rowsWidth: number[] = []
@@ -39,5 +39,9 @@ export class Keyboard {
     const max = Math.max(...rowsWidth)
     this.el.style.width = `${max}em`
     this.el.innerHTML = rows.join('')
+    const modeKey = this.el.querySelector(`[${KEY_CODE_ATTR_NAME}="${KeyCode.MODE}"]`)
+    if (modeKey !== null) {
+      modeKey.innerHTML = modeName
+    }
   }
 }
