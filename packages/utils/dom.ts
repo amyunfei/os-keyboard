@@ -24,6 +24,18 @@ export function toClassSelector(className: string) {
   return '.' + className.split(' ').join('.')
 }
 
+export function inputCursorMove(input: Input, offset: number) {
+  if (offset === 0) return
+  const selectionStart = input.selectionStart || 0
+  const selectionEnd = input.selectionEnd || 0
+  const selectLength = Math.abs(selectionEnd - selectionStart)
+  let finalPos = offset > 0 ? selectionEnd : selectionStart
+  if (selectLength === 0) {
+    finalPos += offset > 0 ? 1 : -1
+  }
+  input.selectionStart = input.selectionEnd = finalPos < 0 ? 0 : finalPos
+}
+
 export function inputAppend(input: Input, value: string): string {
   const selectionStart = input.selectionStart || 0
   const selectionEnd = input.selectionEnd || 0

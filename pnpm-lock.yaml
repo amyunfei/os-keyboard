@@ -47,10 +47,10 @@ importers:
 
   example:
     specifiers:
-      os-keyboard: ^0.0.2
+      os-keyboard: workspace:^0.0.2
       vite: ^4.1.0
     dependencies:
-      os-keyboard: 0.0.2
+      os-keyboard: link:..
     devDependencies:
       vite: 4.1.4
 
@@ -2867,16 +2867,6 @@ packages:
       type-check: 0.4.0
       word-wrap: 1.2.3
     dev: true
-
-  /os-keyboard/0.0.2:
-    resolution: {integrity: sha512-9im+2ZpXK2xXKVfbwgpDXaITrUkggQ9UizK6XrSGe9T0sZ4Sx/KiHlC2J2MLFzexOy266csHZLUSZLMRnk4wcQ==}
-    dependencies:
-      '@os-keyboard/constants': link:packages/constants
-      '@os-keyboard/dictionaries': link:packages/dictionaries
-      '@os-keyboard/layouts': link:packages/layouts
-      '@os-keyboard/theme': link:packages/theme
-      '@os-keyboard/utils': link:packages/utils
-    dev: false
 
   /outdent/0.8.0:
     resolution: {integrity: sha512-KiOAIsdpUTcAXuykya5fnVVT+/5uS0Q1mrkRHcF89tpieSmY33O/tmc54CqwA+bfhbtEfZUNLHaPUiB9X3jt1A==}

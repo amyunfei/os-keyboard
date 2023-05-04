@@ -1,5 +1,6 @@
 import type { Layout } from '@os-keyboard/layouts'
 import { ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
+import { toggleClassName } from '@os-keyboard/utils'
 
 export class Keyboard {
   private el: HTMLElement
@@ -43,5 +44,12 @@ export class Keyboard {
     if (modeKey !== null) {
       modeKey.innerHTML = modeName
     }
+  }
+
+  setActiveKey(keyCode: KeyCode, active: boolean) {
+    const keys = this.el.querySelectorAll<HTMLElement>(`[${KEY_CODE_ATTR_NAME}="${keyCode}"]`)
+    keys.forEach(key => {
+      toggleClassName(key, ClassName.ACTIVE, active)
+    })
   }
 }

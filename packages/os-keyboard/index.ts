@@ -1,4 +1,4 @@
-import type { Input } from '@os-keyboard/utils'
+import { Input, inputCursorMove } from '@os-keyboard/utils'
 import type { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize } from '@os-keyboard/constants'
 import { MouseTrigger, TouchTrigger, ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
 import {
@@ -33,6 +33,8 @@ export class OSKeyboard {
   private currentMode = ''
   private keyboard: Keyboard
   private association: Association
+  private shiftKey = false
+  private capsLockKey = false
   constructor (option: OSKeyboardOption) {
     if (isTouchScreen()) {
       this.focusTrigger = TouchTrigger.FOCUS
@@ -75,9 +77,22 @@ export class OSKeyboard {
       // switch to next mode
       const index = instance.modeKeys.indexOf(instance.currentMode)
       const currentIndex = (index + 1) % instance.modeKeys.length
-      console.log(currentIndex )
       this.currentMode = instance.modeKeys[currentIndex]
       this.render()
+    })
+    this.setFnKey(KeyCode.SHIFT, (_, _currentInput, instance) => {
+      instance.shiftKey = !instance.shiftKey
+      this.keyboard.setActiveKey(KeyCode.SHIFT, instance.shiftKey)
+    })
+    this.setFnKey(KeyCode.CAPSLOCK, (_, _currentInput, instance) => {
+      instance.capsLockKey = !instance.capsLockKey
+      this.keyboard.setActiveKey(KeyCode.CAPSLOCK, instance.capsLockKey)
+    })
+    this.setFnKey(KeyCode.LEFT, (_, currentInput) => {
+      inputCursorMove(currentInput, -1)
+    })
+    this.setFnKey(KeyCode.RIGHT, (_, currentInput) => {
+      inputCursorMove(currentInput, 1)
     })
     // set association panel keys handler
     this.setFnKey(KeyCode.ASSOCIATION, (value, _currentInput, instance) => {

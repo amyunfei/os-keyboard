@@ -1,6 +1,7 @@
 export enum ClassName {
   HIDE = 'is-hide',
   DISABLED = 'is-disabled',
+  ACTIVE = 'is-active',
   KEYBOARD_CONTAINER = 'onscreen-keyboard-container',
   KEYBOARD = 'onscreen-keyboard',
   KEYBOARD_ROW = 'onscreen-keyboard-row',

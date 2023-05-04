@@ -91,6 +91,30 @@ globalStyle(
 
 globalStyle(
   toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ROW) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_KEY) +
+  toClassSelector(ClassName.ACTIVE),
+  { position: 'relative' }
+)
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_ROW) + ' ' +
+  toClassSelector(ClassName.KEYBOARD_KEY) +
+  toClassSelector(ClassName.ACTIVE) + '::after',
+  {
+    content: '""',
+    position: 'absolute',
+    left: '0.5em',
+    top: '0.5em',
+    height: '0.5em',
+    width: '0.5em',
+    borderRadius: '100%',
+    background: '#10B981'
+  }
+)
+
+globalStyle(
+  toClassSelector(ClassName.KEYBOARD_CONTAINER) + ' ' +
   toClassSelector(ClassName.KEYBOARD_ASSOCIATION),
   {
     height: '2.5em',

@@ -1,5 +1,5 @@
-import { OSKeyboard, qwertyLayout, ZH_PINYIN_DICT } from '../dist/index.es.js'
-import '../dist/style.css'
+import { OSKeyboard, qwertyLayout, ZH_PINYIN_DICT } from 'os-keyboard'
+import 'os-keyboard/dist/style.css'
 new OSKeyboard({
   size: 'mini',
   zIndex: 2000,
