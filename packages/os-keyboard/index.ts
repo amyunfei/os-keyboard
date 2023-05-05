@@ -143,12 +143,12 @@ export class OSKeyboard {
     }
   }
   private blurHandler = () => {
-    if (this.sourceInput !== null) {
-      this.sourceInput.removeEventListener('blur', this.blurHandler)
-      this.sourceInput = null
-      this.currentInput = null
-    }
-    this.setVisible(false)
+    // if (this.sourceInput !== null) {
+    //   this.sourceInput.removeEventListener('blur', this.blurHandler)
+    //   this.sourceInput = null
+    //   this.currentInput = null
+    // }
+    // this.setVisible(false)
   }
   private keyboardClickHandler = (event: TriggerEvent) => {
     event.preventDefault()

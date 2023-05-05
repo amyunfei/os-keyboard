@@ -13,32 +13,30 @@ export class Association {
   private limit = 10
   private current = 1
   constructor() {
-    this.el = document.createElement('div')
-    this.el.className = `${ClassName.KEYBOARD_ASSOCIATION} ${ClassName.HIDE}`
+    this.el = this.createElement('div', `${ClassName.KEYBOARD_ASSOCIATION} ${ClassName.HIDE}`)
 
-    const closeKey = document.createElement('div')
-    closeKey.className = ClassName.ASSOCIATION_CLOSE
-    closeKey.setAttribute(KEY_CODE_ATTR_NAME, KeyCode.ASSOCIATION_CLOSE.toString())
-    closeKey.innerHTML = `<i class="${IconClassName.BASE} ${IconClassName.CLOSE}"></i>`
+    const closeKey = this.createElement(
+      'div',
+      ClassName.ASSOCIATION_CLOSE,
+      KeyCode.ASSOCIATION_CLOSE,
+      `<i class="${IconClassName.BASE} ${IconClassName.CLOSE}"></i>`
+    )
 
-    this.input = document.createElement('input')
+    this.input = this.createElement('input', ClassName.ASSOCIATION_INPUT, KeyCode.ASSOCIATION_INPUT)
     this.input.type = 'text'
-    this.input.className = ClassName.ASSOCIATION_INPUT
-    this.input.setAttribute(KEY_CODE_ATTR_NAME, KeyCode.ASSOCIATION_INPUT.toString())
-
-    this.candidateList = document.createElement('div')
-    this.candidateList.className = ClassName.ASSOCIATION_CANDIDATE_LIST
-    this.candidateList.innerHTML = ''
-
-    this.prevKey = document.createElement('span')
-    this.prevKey.className = ClassName.ASSOCIATION_CANDIDATE_OPTION
-    this.prevKey.setAttribute(KEY_CODE_ATTR_NAME, KeyCode.ASSOCIATION_PREV.toString())
-    this.prevKey.innerHTML = `<i class="${IconClassName.BASE} ${IconClassName.PREV}"></i>`
-
-    this.nextKey = document.createElement('span')
-    this.nextKey.className = ClassName.ASSOCIATION_CANDIDATE_OPTION
-    this.nextKey.setAttribute(KEY_CODE_ATTR_NAME, KeyCode.ASSOCIATION_NEXT.toString())
-    this.nextKey.innerHTML = `<i class="${IconClassName.BASE} ${IconClassName.NEXT}"></i>`
+    this.candidateList = this.createElement('div', ClassName.ASSOCIATION_CANDIDATE_LIST)
+    this.prevKey = this.createElement(
+      'span',
+      ClassName.ASSOCIATION_CANDIDATE_OPTION,
+      KeyCode.ASSOCIATION_PREV,
+      `<i class="${IconClassName.BASE} ${IconClassName.PREV}"></i>`
+    )
+    this.nextKey = this.createElement(
+      'span',
+      ClassName.ASSOCIATION_CANDIDATE_OPTION,
+      KeyCode.ASSOCIATION_NEXT,
+      `<i class="${IconClassName.BASE} ${IconClassName.NEXT}"></i>`
+    )
 
     this.el.append(closeKey, this.input, this.candidateList)
   }
@@ -46,6 +44,18 @@ export class Association {
   public setDictionary(dictionary: Dictionary) {
     this.dictionary = dictionary
     this.input.oninput = this.handleInput
+  }
+
+  private createElement<T extends keyof HTMLElementTagNameMap>(tagName: T, className: string, keyCode?: KeyCode, innerHTML?: string) {
+    const el = document.createElement(tagName)
+    el.className = className
+    if (keyCode !== undefined) {
+      el.setAttribute(KEY_CODE_ATTR_NAME, keyCode.toString())
+    }
+    if (innerHTML !== undefined) {
+      el.innerHTML = innerHTML
+    }
+    return el
   }
 
   private handleInput = (event: Event) => {
