@@ -100,6 +100,12 @@ export class OSKeyboard {
       inputAppend(instance.sourceInput, value)
       instance.association.clear()
     })
+    this.setFnKey(KeyCode.ASSOCIATION_PREV, (_, _currentInput, instance) => {
+      instance.association.prev()
+    })
+    this.setFnKey(KeyCode.ASSOCIATION_NEXT, (_, _currentInput, instance) => {
+      instance.association.next()
+    })
 
     option.modes.forEach(mode => {
       this.modeMap.set(mode.name, mode)
@@ -143,12 +149,12 @@ export class OSKeyboard {
     }
   }
   private blurHandler = () => {
-    // if (this.sourceInput !== null) {
-    //   this.sourceInput.removeEventListener('blur', this.blurHandler)
-    //   this.sourceInput = null
-    //   this.currentInput = null
-    // }
-    // this.setVisible(false)
+    if (this.sourceInput !== null) {
+      this.sourceInput.removeEventListener('blur', this.blurHandler)
+      this.sourceInput = null
+      this.currentInput = null
+    }
+    this.setVisible(false)
   }
   private keyboardClickHandler = (event: TriggerEvent) => {
     event.preventDefault()

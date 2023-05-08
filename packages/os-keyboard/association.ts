@@ -10,6 +10,7 @@ export class Association {
   private dictionary: Dictionary | undefined
   private prevKey: HTMLElement
   private nextKey: HTMLElement
+  private keyword = ''
   private limit = 10
   private current = 1
   constructor() {
@@ -65,7 +66,8 @@ export class Association {
       if (value) {
         this.setVisible(true)
         this.current = 1
-        this.associate(value, this.current, this.limit)
+        this.keyword = value
+        this.associate(this.keyword, this.current, this.limit)
       } else {
         this.setVisible(false)
       }
@@ -79,10 +81,19 @@ export class Association {
     const end = offset + limit
     const wordsSlice = words.slice(offset, end)
     this.generateCandidateList(wordsSlice)
-    if (current === 1) {
-      toggleClassName(this.prevKey, ClassName.DISABLED, true)
-    }
+    toggleClassName(this.prevKey, ClassName.DISABLED, current === 1)
     toggleClassName(this.nextKey, ClassName.DISABLED, words.length <= end)
+  }
+
+  public prev = () => {
+    if (this.current === 1) return
+    this.current -= 1
+    this.associate(this.keyword, this.current, this.limit)
+  }
+
+  public next = () => {
+    this.current += 1
+    this.associate(this.keyword, this.current, this.limit)
   }
 
   public getElement(): HTMLElement {
