@@ -1,4 +1,4 @@
-import { ClassName, IconClassName, KeyCode, KEY_CODE_ATTR_NAME } from '@os-keyboard/constants'
+import { ClassName, IconClassName, KeyCode, KEY_CODE_ATTR_NAME, KEY_DISABLED_ATTR_NAME, KeyDisabledStatus } from '@os-keyboard/constants'
 import { Dictionary } from '@os-keyboard/dictionaries'
 import type { Input } from '@os-keyboard/utils'
 import { toggleClassName, isInput, dispatchInput } from '@os-keyboard/utils'
@@ -32,12 +32,14 @@ export class Association {
       KeyCode.ASSOCIATION_PREV,
       `<i class="${IconClassName.BASE} ${IconClassName.PREV}"></i>`
     )
+    this.prevKey.setAttribute(KEY_DISABLED_ATTR_NAME, KeyDisabledStatus.ENABLED)
     this.nextKey = this.createElement(
       'span',
       ClassName.ASSOCIATION_CANDIDATE_OPTION,
       KeyCode.ASSOCIATION_NEXT,
       `<i class="${IconClassName.BASE} ${IconClassName.NEXT}"></i>`
     )
+    this.nextKey.setAttribute(KEY_DISABLED_ATTR_NAME, KeyDisabledStatus.ENABLED)
 
     this.el.append(closeKey, this.input, this.candidateList)
   }
@@ -77,12 +79,19 @@ export class Association {
   private associate = (keyboard: string, current: number, limit: number) => {
     if (this.dictionary === undefined) return
     const words = (this.dictionary[keyboard] || '').split('')
+    const total = words.length
     const offset = (current - 1) * limit
     const end = offset + limit
     const wordsSlice = words.slice(offset, end)
     this.generateCandidateList(wordsSlice)
     toggleClassName(this.prevKey, ClassName.DISABLED, current === 1)
-    toggleClassName(this.nextKey, ClassName.DISABLED, words.length <= end)
+    this.prevKey.setAttribute(
+      KEY_DISABLED_ATTR_NAME, current === 1 ? KeyDisabledStatus.DISABLED : KeyDisabledStatus.ENABLED
+    )
+    toggleClassName(this.nextKey, ClassName.DISABLED, total <= end)
+    this.nextKey.setAttribute(
+      KEY_DISABLED_ATTR_NAME, total <= end ? KeyDisabledStatus.DISABLED : KeyDisabledStatus.ENABLED
+    )
   }
 
   public prev = () => {

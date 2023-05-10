@@ -1,5 +1,5 @@
 import { Input, inputCursorMove } from '@os-keyboard/utils'
-import type { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize } from '@os-keyboard/constants'
+import { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize, KEY_DISABLED_ATTR_NAME, KeyDisabledStatus } from '@os-keyboard/constants'
 import { MouseTrigger, TouchTrigger, ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
 import {
   isTouchScreen, isInput, isHTMLElement, toggleClassName, inputAppend, inputBackspace,
@@ -160,7 +160,7 @@ export class OSKeyboard {
     event.preventDefault()
     if (this.currentInput === null) return
     const eventTarget = event.target
-    if (isHTMLElement(eventTarget)) {
+    if (isHTMLElement(eventTarget) && eventTarget !== this.container) {
       const keyCode = this.getKeyCode(eventTarget)
       if (keyCode === -1) return
       const fn = this.fnMap.get(keyCode)
@@ -173,11 +173,22 @@ export class OSKeyboard {
   }
 
   private getKeyCode(el: HTMLElement): number {
-    const keyCode = parseInt(el.getAttribute(KEY_CODE_ATTR_NAME) || '-1')
-    if (isNaN(keyCode)) {
-      return -1
-    }
-    return keyCode
+    let target = el
+    do {
+      const keyCodeAttr = target.getAttribute(KEY_CODE_ATTR_NAME)
+      if (keyCodeAttr !== null) {
+        const keyStatus = target.getAttribute(KEY_DISABLED_ATTR_NAME)
+        if (keyStatus === KeyDisabledStatus.DISABLED) {
+          return -1
+        } else {
+          return parseInt(keyCodeAttr)
+        }
+      }
+      if (target.parentElement !== null) {
+        target = target.parentElement
+      }
+    } while (target.className.indexOf(ClassName.KEYBOARD_CONTAINER) === -1)
+    return -1
   }
 }
 
