@@ -9,6 +9,7 @@ export enum ClassName {
   KEYBOARD_ASSOCIATION = 'onscreen-keyboard-association',
   ASSOCIATION_CLOSE = 'association-close',
   ASSOCIATION_INPUT = 'association-input',
+  ASSOCIATION_TEXT_BOX = 'association-text-box',
   ASSOCIATION_CANDIDATE_LIST = 'association-candidate-list',
   ASSOCIATION_CANDIDATE_OPTION = 'association-candidate-option'
 }

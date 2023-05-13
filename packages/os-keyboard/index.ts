@@ -106,6 +106,14 @@ export class OSKeyboard {
     this.setFnKey(KeyCode.ASSOCIATION_NEXT, (_, _currentInput, instance) => {
       instance.association.next()
     })
+    this.setFnKey(KeyCode.ASSOCIATION_INPUT, (value, currentInput, instance) => {
+      if (instance.sourceInput === null) return
+      inputAppend(instance.sourceInput, value)
+      instance.association.clear()
+    })
+    this.setFnKey(KeyCode.ASSOCIATION_CLOSE, (_, _currentInput, instance) => {
+      instance.association.clear()
+    })
 
     option.modes.forEach(mode => {
       this.modeMap.set(mode.name, mode)
@@ -130,6 +138,7 @@ export class OSKeyboard {
     const currentMode = this.modeMap.get(this.currentMode)
     if (currentMode !== undefined) {
       this.keyboard.generateKeys(currentMode.layout, currentMode.name)
+      this.association.clear()
       if (currentMode.associate !== undefined) {
         this.currentInput = this.association.getInput()
         this.association.setDictionary(currentMode.associate)

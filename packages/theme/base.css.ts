@@ -1,4 +1,4 @@
-import { globalStyle as vanillaGlobalStyle, GlobalStyleRule } from '@vanilla-extract/css'
+import { globalStyle as vanillaGlobalStyle, GlobalStyleRule, globalKeyframes } from '@vanilla-extract/css'
 import { ClassName } from '@os-keyboard/constants'
 
 type Selector = string | ClassName | { type: 'separator' }
@@ -139,16 +139,32 @@ globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ASSOCIATION, 
 })
 
 globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ASSOCIATION, SEP, ClassName.ASSOCIATION_INPUT], {
-  border: 'none',
-  outline: 'none',
+  display: 'none'
+})
+
+globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ASSOCIATION, SEP, ClassName.ASSOCIATION_TEXT_BOX], {
   color: '#FFFFFF',
+  width: '10em',
   padding: '0 1em',
   cursor: 'pointer',
+  height: '1.5em',
   lineHeight: '1.5em',
   fontSize: 'inherit',
   borderRadius: '0.5em',
   letterSpacing: '0.1em',
   background: 'rgba(255, 255, 255, 0.2)',
+  verticalAlign: 'middle'
+})
+const CURSOR_BLINK = 'os-keyboard-cursor-blink'
+globalKeyframes(CURSOR_BLINK, {
+  '0%': { opacity: 1 },
+  '50%': { opacity: 0 },
+  '100%': { opacity: 1 }
+})
+globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ASSOCIATION, SEP, ClassName.ASSOCIATION_TEXT_BOX, '::after'], {
+  content: '\u007C',
+  display: 'inline-block',
+  animation: `1s infinite ease-out ${CURSOR_BLINK}`
 })
 
 globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ASSOCIATION, SEP, ClassName.ASSOCIATION_CANDIDATE_LIST], {

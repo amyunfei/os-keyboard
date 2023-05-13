@@ -6,6 +6,7 @@ import { toggleClassName, isInput, dispatchInput } from '@os-keyboard/utils'
 export class Association {
   private el: HTMLElement
   private input: Input
+  private textBox: HTMLElement
   private candidateList: HTMLElement
   private dictionary: Dictionary | undefined
   private prevKey: HTMLElement
@@ -23,8 +24,10 @@ export class Association {
       `<i class="${IconClassName.BASE} ${IconClassName.CLOSE}"></i>`
     )
 
-    this.input = this.createElement('input', ClassName.ASSOCIATION_INPUT, KeyCode.ASSOCIATION_INPUT)
+    this.input = this.createElement('input', ClassName.ASSOCIATION_INPUT)
     this.input.type = 'text'
+
+    this.textBox = this.createElement('div', ClassName.ASSOCIATION_TEXT_BOX, KeyCode.ASSOCIATION_INPUT)
     this.candidateList = this.createElement('div', ClassName.ASSOCIATION_CANDIDATE_LIST)
     this.prevKey = this.createElement(
       'span',
@@ -41,7 +44,7 @@ export class Association {
     )
     this.nextKey.setAttribute(KEY_DISABLED_ATTR_NAME, KeyDisabledStatus.ENABLED)
 
-    this.el.append(closeKey, this.input, this.candidateList)
+    this.el.append(closeKey, this.textBox, this.candidateList)
   }
 
   public setDictionary(dictionary: Dictionary) {
@@ -69,6 +72,7 @@ export class Association {
         this.setVisible(true)
         this.current = 1
         this.keyword = value
+        this.textBox.innerText = value
         this.associate(this.keyword, this.current, this.limit)
       } else {
         this.setVisible(false)
