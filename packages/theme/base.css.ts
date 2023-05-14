@@ -5,7 +5,7 @@ type Selector = string | ClassName | { type: 'separator' }
 function isClassName (selector: string): selector is ClassName {
   return Object.values(ClassName).includes(selector as ClassName)
 }
-function globalStyle(selectors: Selector[], rule: GlobalStyleRule) {
+function toClassSelector (selectors: Selector[]): string {
   const classSelectors = selectors.map((selector) => {
     if (typeof selector === 'string') {
       if (isClassName(selector)) {
@@ -18,7 +18,10 @@ function globalStyle(selectors: Selector[], rule: GlobalStyleRule) {
       return selector
     }
   })
-  return vanillaGlobalStyle(classSelectors.join(''), rule)
+  return classSelectors.join('')
+}
+function globalStyle(selectors: Selector[], rule: GlobalStyleRule) {
+  return vanillaGlobalStyle(toClassSelector(selectors), rule)
 }
 const SEP = { type: 'separator' as const }
 
@@ -57,13 +60,12 @@ globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, ':last-c
   marginBottom: 0
 })
 
-globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY], {
+globalStyle([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY], {
   display: 'table-cell',
   boxSizing: 'border-box',
   verticalAlign: 'top',
   minWidth: '3.75em',
   width: '3.75em',
-  padding: '0 0.375em',
   backgroundImage: 'linear-gradient(to bottom, #191919, #151515 30%, #151515)',
   color: '#c1c1c1',
   borderRadius: '0.3em',
@@ -71,21 +73,42 @@ globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, Cla
   userSelect: 'none',
   cursor: 'pointer',
   overflow: 'hidden',
-  lineHeight: '3.75em'
+  lineHeight: '3.75em',
 })
 
-globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ':last-child'], {
+globalStyle([ClassName.KEYBOARD_KEY, SEP, ClassName.KEY_TEXT_PRIMARY], {
+  padding: '0 0.375em',
+  position: 'relative',
+  zIndex: 1
+})
+
+const DOUBLE_KEY_CLASS_PREFIX = toClassSelector([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ClassName.DOUBLE])
+globalStyle([DOUBLE_KEY_CLASS_PREFIX], {
+  position: 'relative'
+})
+
+globalStyle([DOUBLE_KEY_CLASS_PREFIX, SEP, ClassName.KEY_TEXT_SECONDARY], {
+  position: 'absolute',
+  fontSize: '0.5em',
+  top: '1em',
+  right: '1em',
+  lineHeight: '1.5em',
+  color: '#999999',
+  zIndex: 0
+})
+
+globalStyle([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ':last-child'], {
   marginRight: 0
 })
 
-globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ':active'], {
+globalStyle([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ':active'], {
   boxShadow: 'none'
 })
 
-globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ClassName.ACTIVE], {
+globalStyle([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ClassName.ACTIVE], {
   position: 'relative'
 })
-globalStyle([ClassName.KEYBOARD_CONTAINER, SEP, ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ClassName.ACTIVE, '::after'], {
+globalStyle([ClassName.KEYBOARD_ROW, SEP, ClassName.KEYBOARD_KEY, ClassName.ACTIVE, '::after'], {
   content: '""',
   position: 'absolute',
   left: '0.5em',

@@ -88,11 +88,13 @@ export class OSKeyboard {
       instance.capsLockKey = !instance.capsLockKey
       this.keyboard.setActiveKey(KeyCode.CAPSLOCK, instance.capsLockKey)
     })
-    this.setFnKey(KeyCode.LEFT, (_, currentInput) => {
-      inputCursorMove(currentInput, -1)
+    this.setFnKey(KeyCode.LEFT, (_, _currentInput, instance) => {
+      if (instance.sourceInput === null) return
+      inputCursorMove(instance.sourceInput, -1)
     })
-    this.setFnKey(KeyCode.RIGHT, (_, currentInput) => {
-      inputCursorMove(currentInput, 1)
+    this.setFnKey(KeyCode.RIGHT, (_, _currentInput, instance) => {
+      if (instance.sourceInput === null) return
+      inputCursorMove(instance.sourceInput, 1)
     })
     // set association panel keys handler
     this.setFnKey(KeyCode.ASSOCIATION, (value, _currentInput, instance) => {

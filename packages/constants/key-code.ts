@@ -124,6 +124,7 @@ export enum KeyCode {
 
 export const KEY_CODE_ATTR_NAME = 'data-key-code'
 export const KEY_DISABLED_ATTR_NAME = 'data-key-disabled'
+export const KEY_VALUE_ATTR_NAME = 'data-key-value'
 export enum KeyDisabledStatus {
   DISABLED = 'true',
   ENABLED = 'false'
