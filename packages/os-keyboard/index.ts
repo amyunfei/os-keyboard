@@ -35,6 +35,7 @@ export class OSKeyboard {
   private association: Association
   private shiftKey = false
   private capsLockKey = false
+  private altKey = false
   constructor (option: OSKeyboardOption) {
     if (isTouchScreen()) {
       this.focusTrigger = TouchTrigger.FOCUS
@@ -83,10 +84,18 @@ export class OSKeyboard {
     this.setFnKey(KeyCode.SHIFT, (_, _currentInput, instance) => {
       instance.shiftKey = !instance.shiftKey
       this.keyboard.setActiveKey(KeyCode.SHIFT, instance.shiftKey)
+      this.keyboard.setShiftMode(instance.shiftKey)
+      this.keyboard.setCapMode(instance.shiftKey || instance.capsLockKey)
+    })
+    this.setFnKey(KeyCode.ALT, (_, _currentInput, instance) => {
+      instance.altKey = !instance.altKey
+      this.keyboard.setActiveKey(KeyCode.ALT, instance.altKey)
+      this.keyboard.setAltMode(instance.altKey)
     })
     this.setFnKey(KeyCode.CAPSLOCK, (_, _currentInput, instance) => {
       instance.capsLockKey = !instance.capsLockKey
       this.keyboard.setActiveKey(KeyCode.CAPSLOCK, instance.capsLockKey)
+      this.keyboard.setCapMode(instance.shiftKey || instance.capsLockKey)
     })
     this.setFnKey(KeyCode.LEFT, (_, _currentInput, instance) => {
       if (instance.sourceInput === null) return
