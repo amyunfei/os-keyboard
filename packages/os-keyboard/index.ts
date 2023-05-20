@@ -117,7 +117,7 @@ export class OSKeyboard {
     this.setFnKey(KeyCode.ASSOCIATION_NEXT, (_, _currentInput, instance) => {
       instance.association.next()
     })
-    this.setFnKey(KeyCode.ASSOCIATION_INPUT, (value, currentInput, instance) => {
+    this.setFnKey(KeyCode.ASSOCIATION_INPUT, (value, _currentInput, instance) => {
       if (instance.sourceInput === null) return
       inputAppend(instance.sourceInput, value)
       instance.association.clear()
