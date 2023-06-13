@@ -1,2 +1,7 @@
-export const keyboardSize = ['mini', 'small', 'medium', 'large'] as const
-export type KeyboardSize = typeof keyboardSize[number]
+export const keyboardSizeToFontSize = {
+  mini: '12px',
+  small: '14px',
+  medium: '16px',
+  large: '18px',
+}
+export type KeyboardSize = keyof typeof keyboardSizeToFontSize

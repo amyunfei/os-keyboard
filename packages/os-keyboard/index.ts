@@ -1,5 +1,5 @@
 import { Input, inputCursorMove } from '@os-keyboard/utils'
-import { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize, KEY_DISABLED_ATTR_NAME, KeyDisabledStatus } from '@os-keyboard/constants'
+import { FocusTrigger, InputTrigger, TriggerEvent, KeyboardSize, KEY_DISABLED_ATTR_NAME, KeyDisabledStatus, keyboardSizeToFontSize } from '@os-keyboard/constants'
 import { MouseTrigger, TouchTrigger, ClassName, KEY_CODE_ATTR_NAME, KeyCode } from '@os-keyboard/constants'
 import {
   isTouchScreen, isInput, isHTMLElement, toggleClassName, inputAppend, inputBackspace,
@@ -41,11 +41,14 @@ export class OSKeyboard {
       this.focusTrigger = TouchTrigger.FOCUS
       this.inputTrigger = TouchTrigger.INPUT
     }
+    const { size } = option
+    const fontSize = keyboardSizeToFontSize[size]
 
     this.keyboard = new Keyboard()
     this.association = new Association()
     this.container = document.createElement('div')
-    this.container.className = `${ClassName.KEYBOARD_CONTAINER} ${ClassName.HIDE} ${option.size}`
+    this.container.className = `${ClassName.KEYBOARD_CONTAINER} ${ClassName.HIDE}`
+    this.container.style.fontSize = fontSize
     this.container.appendChild(this.association.getElement())
     this.container.appendChild(this.keyboard.getElement())
     document.body.appendChild(this.container)
