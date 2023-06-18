@@ -11,7 +11,11 @@ export default defineConfig({
       ],
       name: 'os-keyboard',
       fileName: format => `index.${format}.js`
-    }
+    },
+    outDir: 'publish/dist'
   },
-  plugins: [vanillaExtractPlugin(), dts({ include: './packages' })]
+  plugins: [vanillaExtractPlugin(), dts({
+    include: './packages',
+    rollupTypes: true
+  })]
 })
