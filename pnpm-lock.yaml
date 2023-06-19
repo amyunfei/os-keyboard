@@ -68,7 +68,13 @@ importers:
       '@types/semver': 7.5.0
       semver: 7.5.2
 
+  packages/layouts:
+    specifiers: {}
+
   packages/os-keyboard:
+    specifiers: {}
+
+  packages/theme:
     specifiers: {}
 
 packages:

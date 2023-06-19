@@ -16,6 +16,6 @@ export default defineConfig({
   },
   plugins: [vanillaExtractPlugin(), dts({
     include: './packages',
-    rollupTypes: true
+    rollupTypes: true,
   })]
 })

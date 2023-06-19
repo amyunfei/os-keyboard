@@ -1,12 +1,12 @@
 {
   "name": "os-keyboard",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "files": [
     "dist"
   ],
   "main": "./publish/dist/index.umd.js",
   "module": "./publish/dist/index.es.js",
-  "types": "./publish/dist/os-keyboard/index.d.ts",
+  "types": "./publish/dist/index.d.ts",
   "workspaces": [
     "packages/*",
     "example"
