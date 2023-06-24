@@ -53,10 +53,10 @@ importers:
 
   example:
     specifiers:
-      os-keyboard: workspace:^0.0.4
+      os-keyboard: workspace:^1.0.0
       vite: ^4.1.0
     dependencies:
-      os-keyboard: link:..
+      os-keyboard: link:../packages/os-keyboard
     devDependencies:
       vite: 4.1.4
 

@@ -216,5 +216,5 @@ export class OSKeyboard {
 }
 
 export * from '@os-keyboard/layouts'
-export * from '@os-keyboard/dictionaries'
+export { ZH_PINYIN_DICT } from '@os-keyboard/dictionaries'
 export * from '@os-keyboard/theme'

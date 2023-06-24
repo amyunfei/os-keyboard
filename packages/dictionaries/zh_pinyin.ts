@@ -1,4 +1,5 @@
-export const ZH_PINYIN_DICT = {
+import type { Dictionary } from './typing'
+export const ZH_PINYIN_DICT: Dictionary = {
   a: '啊阿呵嗄锕',
   ai: '埃挨哎唉哀艾皑蔼矮碍爱隘癌',
   an: '鞍氨安俺按暗岸胺案',
