@@ -36,6 +36,7 @@ export class OSKeyboard {
   private shiftKey = false
   private capsLockKey = false
   private altKey = false
+  private visibleTimer: NodeJS.Timeout | null = null
   constructor (option: OSKeyboardOption) {
     if (isTouchScreen()) {
       this.focusTrigger = TouchTrigger.FOCUS
@@ -137,10 +138,15 @@ export class OSKeyboard {
   }
 
   public setVisible(visible?: boolean) {
-    if (visible !== undefined) {
-      visible = !visible
+    if (this.visibleTimer !== null) {
+      clearTimeout(this.visibleTimer)
     }
-    toggleClassName(this.container, ClassName.HIDE, visible)
+    this.visibleTimer = setTimeout(() => {
+      if (visible !== undefined) {
+        visible = !visible
+      }
+      toggleClassName(this.container, ClassName.HIDE, visible)
+    }, 100)
   }
 
   public setFnKey(keyCode: KeyCode, fn: FnKeyHandler) {
