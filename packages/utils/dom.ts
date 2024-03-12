@@ -2,8 +2,7 @@ import { Input } from './types'
 
 export function toggleClassName(element: HTMLElement, token: string, force?: boolean) {
   if (token === '') return
-  const classList = element.className.split(' ')
-
+  const classList = element.className.split(/\s+/).filter(name => name !== '')
   let exist = false
   for (let i = 0; i < classList.length; i++) {
     if (classList[i] === token) {
@@ -21,7 +20,7 @@ export function toggleClassName(element: HTMLElement, token: string, force?: boo
 }
 
 export function toClassSelector(className: string) {
-  return '.' + className.split(' ').join('.')
+  return '.' + className.split(/\s+/).filter(name => name !== '').join('.')
 }
 
 export function inputCursorMove(input: Input, offset: number) {
